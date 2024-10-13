@@ -40,6 +40,7 @@ const Work = () => {
           word,
           {
             opacity: 0,
+            rotationZ: 0,
             rotationY: -90,
             transformPerspective: 1000,
             transformOrigin: "50% 50%",
@@ -47,12 +48,14 @@ const Work = () => {
           {
             opacity: 1,
             rotationY: 0,
+            rotationZ: 0,
             duration: 1.0,
             ease: "power3.out",
             delay: index * 0.3,
           }
         ).to(word, {
           rotationY: 90,
+          rotationZ: 4,
           opacity: 0,
           duration: 1.5,
           ease: "power3.out",
@@ -139,14 +142,14 @@ const Work = () => {
                 ease: "power4.out",
               })
               .from(`.image-${i}`, {
-                left: isDesktop ? "120%" : "80%",
-                top: isDesktop ? "50%" : "100%",
-                rotate: -35,
-                duration: 5, // Image moves for 5 seconds
+                left: isDesktop ? "130%" : "80%",
+                top: isDesktop ? "60%" : "100%",
+                rotate: -40,
+                duration: 4, // Image moves for 5 seconds
               }, "<") // Image starts moving immediately
               .from(`.heading-${i}`, {
                 scale: 0.8, // Initial scale for zoom effect
-                duration: 1,
+                duration: 0.5,
                 ease: "power3.out",
               }, "-=4") // Heading animation starts 1 second after the image animation
               .to(`.heading-${i}`, {
@@ -157,7 +160,7 @@ const Work = () => {
               .call(() => setCounter(i + 1))
               .to(`.work-path-${i + 1}`, {
                 scale: 0,
-                duration: 1,
+                duration: 0.2,
                 ease: "power4.out",
               });
           });
@@ -166,34 +169,6 @@ const Work = () => {
       );
     },
     { scope: container }
-
-    //       data.map((e, i) => {
-    //         tl.call(() => setCounter(i + 1))
-    //           .to(`.slide-${i - 1}`, { yPercent: -100 })
-    //           .from(`.slide-${i}`, { yPercent: i === 0 ? 0 : 100 }, "<")
-    //           .from(`.work-path-${i + 1}`, {
-    //             scale: 0,
-    //             duration: 0.8,
-    //             ease: "power4",
-    //           })
-    //           .from(`.heading-${i}`, { scale: innerWidth < 1600 ? 0.6 : 0.6 })
-    //           .from(`.image-${i}`, {
-    //             left: isDesktop ? "120%" : "80%",
-    //             top: isDesktop ? "50%" : "100%",
-    //             rotate: -35,
-    //             duration: 5,
-    //           })
-    //           .call(() => setCounter(i + 1))
-    //           .to(`.work-path-${i + 1}`, {
-    //             scale: 0,
-    //             duration: 0.8,
-    //             ease: "power4",
-    //           });
-    //       });
-    //     }
-    //   );
-    // },
-    // { scope: container }
   );
 
   const { workHeadingPointerEnter, workHeadingPointerLeave } =
@@ -236,7 +211,7 @@ const Work = () => {
 
       <div className={`slider ${s.slider}`}>
         <div className={s.counter}>
-          <h2>0{counter}/08</h2>
+          <h2>0{counter}/07</h2>
         </div>
 
         {data.map(({ name }, i) => {

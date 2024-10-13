@@ -83,7 +83,6 @@ const Header = ({
   }, []);
 
   const handleScrollTo = (index: number) => {
-      // console.log(`Scrolling to section: ${component[index].heading}`); 
     const element = document.querySelector(
       `#${components[index].heading.toLowerCase()}`
     );
@@ -91,11 +90,6 @@ const Header = ({
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
-    //   if (index === activeMenus) return; // Do nothing if already active
-
-    //   setActiveMenus(index);
-    //   setActiveComponentName(components[index].heading);
-    // }
     if (element) {
       let offset;
       if (index <= 2) {
@@ -495,37 +489,44 @@ const Header = ({
       </header>
 
       {!isNavOpen && (
-        <div className={s.dotNavigation}>
-          {getDisplayedButtons().map((comp, index) => {
-            // Calculate the correct global index based on the buttons displayed
-            const globalIndex =
-              activeMenus === 0
-                ? index
-                : activeMenus === components.length - 1
-                ? components.length - 3 + index
-                : activeMenus - 1 + index;
+  <div className={s.dotNavigation}>
+    {/* First Column */}
+    <div className={s.dotColumn}>
+      {components.slice(0, 3).map((comp, index) => {
+        const globalIndex = index;
+        return (
+          <div
+            key={globalIndex}
+            className={s.dotWrapper}
+            onClick={() => handleScrollTo(globalIndex)}
+          >
+            <div className={s.nameContainer}>
+              <h1 className={s.name}>{comp.heading}</h1>
+            </div>
+          </div>
+        );
+      })}
+    </div>
 
-            return (
-              <div
-                key={globalIndex}
-                className={s.dotWrapper}
-                onClick={() => handleScrollTo(globalIndex)}
-              >
-                <div className={s.nameContainer}>
-                  <h1 className={s.name}>{comp.heading}</h1>
-                </div>
-                <div
-                  className={`${s.dotContainer} ${
-                    activeMenus === globalIndex ? s.active : ""
-                  }`}
-                >
-                  <div className={s.dot}></div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+    {/* Second Column */}
+    <div className={s.dotColumn}>
+      {components.slice(3, 6).map((comp, index) => {
+        const globalIndex = index + 3;
+        return (
+          <div
+            key={globalIndex}
+            className={s.dotWrapper}
+            onClick={() => handleScrollTo(globalIndex)}
+          >
+            <div className={s.nameContainer}>
+              <h1 className={s.name}>{comp.heading}</h1>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+)}
 
       <nav className={`menu ${s.menu}`}>
         {/* <MenuElements /> */}

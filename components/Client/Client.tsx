@@ -15,7 +15,70 @@ const Client = () => {
   const para = useRef<HTMLParagraphElement>(null);
   const paraHide = useRef<HTMLParagraphElement>(null);
   const heading = useRef<HTMLDivElement>(null);
+  const leftColumnRef = useRef<HTMLDivElement>(null);
+  const rightColumnRef = useRef<HTMLDivElement>(null);
+  const images = [...Array(38)];
 
+  // useEffect(() => {
+  //   const leftLogos = leftColumnRef.current;
+  //   const rightLogos = rightColumnRef.current;
+
+  //   if (leftLogos && rightLogos) {
+  //     // Left column animation (top to bottom)
+  //     gsap.to(leftLogos, {
+  //       // yPercent: -100, // Move logos downwards
+  //       duration: 10, // Adjust speed
+  //       ease: 'none',
+  //       repeat: -1, // Infinite loop
+  //       modifiers: {
+  //         yPercent: (yPercent) => yPercent % 100, // Create a seamless loop, no gap
+  //       },
+  //     });
+
+  //     // Right column animation (bottom to top)
+  //     gsap.to(rightLogos, {
+  //       // yPercent: 100, // Move logos upwards
+  //       duration: 10, // Adjust speed
+  //       ease: 'none',
+  //       repeat: -1, // Infinite loop
+  //       modifiers: {
+  //         yPercent: (yPercent) => yPercent % 100, // Create a seamless loop, no gap
+  //       },
+  //     });
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    const leftColumn = leftColumnRef.current;
+    const rightColumn = rightColumnRef.current;
+
+    if (leftColumn && rightColumn) {
+      // Function to scroll the left column down
+      const scrollLeftColumn = () => {
+        leftColumn.scrollTop += 1; // Scroll down
+        if (leftColumn.scrollTop >= leftColumn.scrollHeight / 2) {
+          leftColumn.scrollTop = 0; // Reset scroll position
+        }
+      };
+
+      // Function to scroll the right column up (reverse)
+      const scrollRightColumn = () => {
+        rightColumn.scrollTop -= 1; // Scroll up
+        if (rightColumn.scrollTop <= 0) {
+          rightColumn.scrollTop = rightColumn.scrollHeight / 2; // Reset scroll position
+        }
+      };
+
+      const leftInterval = setInterval(scrollLeftColumn, 9); // Adjust speed as needed
+      const rightInterval = setInterval(scrollRightColumn, 19);
+
+      return () => {
+        clearInterval(leftInterval);
+        clearInterval(rightInterval);
+      };
+    }
+  }, []);
+  
   useEffect(() => {
     if (heading.current) {
       const words = heading.current.querySelectorAll(".word");
@@ -36,12 +99,14 @@ const Client = () => {
           word,
           {
             opacity: 0,
+            rotationZ: 0,
             rotationY: -90,
             transformPerspective: 1000,
             transformOrigin: "50% 50%",
           },
           {
             opacity: 1,
+            rotationZ: 0,
             rotationY: 0,
             duration: 1.0,
             ease: "power3.out",
@@ -49,6 +114,7 @@ const Client = () => {
           }
         ).to(word, {
           rotationY: 90,
+          rotationZ: 4,
           opacity: 0,
           duration: 1.5,
           ease: "power3.out",
@@ -240,36 +306,36 @@ const Client = () => {
       </div>
       <div className={s.grid}>
       <div className={`client-grid ${s.grid_logos}`}>
-    {/* Left Column */}
-    <div className="image-column">
-      {[...Array(19)].map((e, i) => (
-        <Image
-          key={`left-${i}`}
-          className={`client-logo ${s.grid_logo}`}
-          src={`/clients/${i}.png`}
-          height={100}
-          width={100}
-          alt="logo"
-          loading="lazy"
-        />
-      ))}
-    </div>
+      {/* Left Column */}
+      <div className="image-column" ref={leftColumnRef} style={{ overflow: "hidden", height: "100vh" }}>
+        {[...images, ...images].map((_, i) => (
+          <Image
+            key={`left-${i}`}
+            className={`client-logo ${s.grid_logo}`}
+            src={`/clients/${i % 38}.png`}
+            height={100}
+            width={100}
+            alt="logo"
+            loading="lazy"
+          />
+        ))}
+      </div>
 
-    {/* Right Column */}
-    <div className="image-column">
-      {[...Array(19)].map((e, i) => (
-        <Image
-          key={`right-${i}`}
-          className={`client-logo ${s.grid_logo}`}
-          src={`/clients/${i + 19}.png`}
-          height={100}
-          width={100}
-          alt="logo"
-          loading="lazy"
-        />
-      ))}
+      {/* Right Column */}
+      <div className="image-column" ref={rightColumnRef} style={{ overflow: "hidden", height: "100vh" }}>
+        {[...images, ...images].map((_, i) => (
+          <Image
+            key={`right-${i}`}
+            className={`client-logo ${s.grid_logo}`}
+            src={`/clients/${i % 38}.png`}
+            height={100}
+            width={100}
+            alt="logo"
+            loading="lazy"
+          />
+        ))}
+      </div>
     </div>
-  </div>
 
         <div className={`client-grid-para ${s.grid_para}`}>
           <p ref={para}>

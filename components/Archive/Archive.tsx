@@ -33,12 +33,14 @@ const Archive = () => {
           word,
           {
             opacity: 0,
+            rotationZ: 0,
             rotationY: -90,
             transformPerspective: 1000,
             transformOrigin: "50% 50%",
           },
           {
             opacity: 1,
+            rotationZ: 0,
             rotationY: 0,
             duration: 1.0,
             ease: "power3.out",
@@ -46,6 +48,7 @@ const Archive = () => {
           }
         ).to(word, {
           rotationY: 90,
+          rotationZ: 4,
           opacity: 0,
           duration: 1.5,
           ease: "power3.out",

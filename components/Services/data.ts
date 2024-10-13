@@ -30,12 +30,12 @@ export const data: Data[] = [
     color: "#fcebe4",
     deg: 292,
   },
-  {
-    heading: "ERP-Systeme",
-    desc: "An ERP system (Enterprise Resource Planning) is a software solution that helps businesses manage their resources efficiently by integrating and automating various business processes. It provides a central platform for data capture, processing, and analysis, spanning accounting, inventory management, and customer relationship management.",
-    color: "#ecded9",
-    deg: 243,
-  },
+  // {
+  //   heading: "ERP-Systeme",
+  //   desc: "An ERP system (Enterprise Resource Planning) is a software solution that helps businesses manage their resources efficiently by integrating and automating various business processes. It provides a central platform for data capture, processing, and analysis, spanning accounting, inventory management, and customer relationship management.",
+  //   color: "#ecded9",
+  //   deg: 243,
+  // },
   {
     heading: "Visual Identity",
     desc: "I specialize in crafting distinctive visual elements that encapsulate your story and resonate with your audience. Let me elevate your brand’s recognition and leave a lasting impression with my unique design touch.",

@@ -52,6 +52,7 @@ const Layout: React.FC<Props> = ({ children }) => {
   );
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const hideMouseInitially = () => {
       const mouseElement = document.querySelector(".mouse");
       if (mouseElement) {

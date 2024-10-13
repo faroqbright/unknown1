@@ -91,6 +91,30 @@
   }
 }
 
+.client-grid {
+  display: flex;
+  overflow: hidden;
+}
+
+.image-column {
+  display: flex;
+  flex-direction: column;
+  animation: scroll 20s linear infinite;
+}
+
+.image-column.right {
+  animation-direction: reverse;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
 .grid {
   display: flex;
   flex-direction: column;
@@ -129,7 +153,7 @@
     @include lg {
       padding: 24px 40px;
       width: 100%;
-      height: 100px;
+      height: 90px;
     }
     @include xxl {
       padding: 1.5vw 3vw;
@@ -144,6 +168,7 @@
     @include lg {
       padding-inline: 40px;
       width: 70%;
+      margin-top: 30px;
     }
     p {
       font-size: clamp(1.5rem, 1.2vw + 1rem, 2rem);

@@ -35,6 +35,7 @@ const About = () => {
           word,
           {
             opacity: 0,
+            rotationZ: 0,
             rotationY: -90,
             transformPerspective: 1000,
             transformOrigin: "50% 50%",
@@ -42,12 +43,14 @@ const About = () => {
           {
             opacity: 1,
             rotationY: 0,
+            rotationZ: 0,
             duration: 1.0,
             ease: "power3.out",
             delay: index * 0.3,
           }
         ).to(word, {
           rotationY: 90,
+          rotationZ: 4,
           opacity: 0,
           duration: 1.5,
           ease: "power3.out",

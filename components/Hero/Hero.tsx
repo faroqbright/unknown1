@@ -34,7 +34,7 @@ const Hero: React.FC = () => {
     if (size?.width && size.width > 640) {
       return showData2 ? import('./lottie/EndPortion.json') : import('./lottie/data.json');
     } else {
-      return showData2 ? import('./lottie/data-m2.json') : import('./lottie/data-m.json');
+      return showData2 ? import('./lottie/datam1.svg') : import('./lottie/data-m.json');
     }
   };
 

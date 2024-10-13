@@ -32,7 +32,7 @@ const Card: React.FC<Props> = ({
   }, [id]);
 
   return (
-    <div data-varient={position} className={`archive-card-${id} ${s.card}`}>
+    <div data-varient={position} className={`archive-card-${id} ${s.card} ${id === 17 ? s.lastCard : ''}`}>
       <div
         style={{ backgroundImage: `url(${backgroundImage})` }}
         data-varient={imgVarient}

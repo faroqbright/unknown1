@@ -38,25 +38,25 @@ export const data: Data[] = [
     desc: ["Direction artistique", "Identité de marque", "print / digital"],
     color: "#fff4ce",
   },
+  // {
+  //   id: 3,
+  //   name: "Kim Layani",
+  //   desc: [
+  //     "Contenu Editorial",
+  //     "Direction de production",
+  //     "Identité de marque",
+  //     "print / digital",
+  //   ],
+  //   color: "#daf2e0",
+  // },
   {
     id: 3,
-    name: "Kim Layani",
-    desc: [
-      "Contenu Editorial",
-      "Direction de production",
-      "Identité de marque",
-      "print / digital",
-    ],
-    color: "#daf2e0",
-  },
-  {
-    id: 4,
     name: "Everphone",
     desc: ["Identité de marque", "Shooting photo"],
     color: "#dbedf2",
   },
   {
-    id: 5,
+    id: 4,
     name: "Vermietet.de",
     desc: [
       "design product",
@@ -70,7 +70,7 @@ export const data: Data[] = [
     color: "#eafcf8",
   },
   {
-    id: 6,
+    id: 5,
     name: "Mynd Yoga",
     desc: [
       "Identité de marque",
@@ -82,7 +82,7 @@ export const data: Data[] = [
     color: "#faf2fe",
   },
   {
-    id: 7,
+    id: 6,
     name: "Monipol",
     desc: ["Direction artistique", "Identité de marque", "print / digital"],
     color: "#ebebeb",
