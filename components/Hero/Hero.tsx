@@ -30,19 +30,21 @@ const Hero: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const getAnimationData = async (): Promise<AnimationData> => {
-    if (size?.width && size.width > 640) {
+  const getAnimationData = async (): Promise<AnimationData | null> => {
+    const width = size?.width ?? 0; // Fallback to 0 if width is undefined
+
+    if (width > 640) {
       return showData2 ? import('./lottie/EndPortion.json') : import('./lottie/data.json');
-    } else {
-      return showData2 ? import('./lottie/datam1.svg') : import('./lottie/data-m.json');
     }
+    // Return null for SVG usage on mobile
+    return null;
   };
 
   useEffect(() => {
     const loadAnimation = async () => {
       try {
         const data = await getAnimationData();
-        setAnimationData(data.default);
+        setAnimationData(data?.default || null); // Set to null for SVG on mobile
       } catch (error) {
         console.error("Failed to load animation data:", error);
       }
@@ -59,14 +61,23 @@ const Hero: React.FC = () => {
         <HeroArrowDown />
       </div>
       <div className={s.lottie}>
-        {animationData && (
-          <Lottie
-            options={{
-              loop: showData2,
-              autoplay: true,
-              animationData: animationData,
-            }}
-          />
+        {(size?.width ?? 0) > 640 ? (
+          animationData && (
+            <Lottie
+              options={{
+                loop: showData2,
+                autoplay: true,
+                animationData: animationData,
+              }}
+            />
+          )
+        ) : (
+          <img style={{
+            width: '80%',       // Adjust as necessary for responsiveness
+            height: 'auto',     // Maintain aspect ratio
+            display: 'block',
+            margin: '0 auto'    // Center the image horizontally
+          }} src="/datam1.svg" alt="Mobile Animation" />
         )}
       </div>
     </section>
