@@ -65,8 +65,87 @@
   }
 }
 
-.lastCard {
+.lastCard { 
   margin-top: -250px;
+}
+
+.Id1 {
+  .card {
+    &_box {
+      @include lg {
+        padding-left: 170px;
+        max-width: 450px;
+      }}
+  }
+}
+
+.Id2 {
+  .card {
+    &_box {
+      @include lg {
+        padding-left: 110px;
+        max-width: 500px;
+      }}
+  }
+}
+
+.Id4 {
+  .card {
+    &_box {
+      @include lg {
+        padding-left: 100px;
+      }}
+  }
+}
+
+.Id5 {
+  .card {
+    &_box {
+      @include lg {
+        padding-left: 190px;
+        max-width: 450px;
+      }}
+  }
+}
+
+.Id7 {
+  .card {
+    &_box {
+      @include lg {
+        padding-left: 350px;
+        margin-top: 5px;
+      }}
+  }
+}
+
+.Id8 {
+  .card {
+    &_box {
+      @include lg {
+        padding-left: 180px;
+        margin-top: 5px;
+        margin-bottom: 100px;
+      }}
+  }
+}
+
+.Id12 {
+  .card {
+    &_box {
+      @include lg {
+        padding-left: 120px;
+      }}
+  }
+}
+
+.Id15 {
+  .card {
+    &_box {
+      @include lg {
+        padding-left: 160px;
+        max-width: 500px;
+      }}
+  }
 }
 
 .grid {
@@ -77,10 +156,11 @@
   row-gap: 12px;
   @include lg {
     // row-gap: 100px;
-    column-gap: 160px;
+    column-gap: 130px;
     padding-inline: 0px;
     grid-template-columns: repeat(2, min-content);
     margin-top: 100px;
+    margin-left: 50px;
   }
   @include xxl {
     column-gap: 250px;

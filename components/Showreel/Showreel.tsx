@@ -91,18 +91,18 @@ const Showreel = () => {
             rotationZ: 0,
             duration: 1.0,
             ease: "power3.out",
-            delay: index * 0.3,
+            delay: index * 0.8,
           }
         ).to(word, {
-          rotationY: 90,
-          rotationZ: 4,
-          opacity: 0,
-          duration: 1.5,
+          rotationY: 89,
+          rotationZ: 8,
+          opacity: 1,
+          duration: 2.0,
           ease: "power3.out",
-          delay: 0.02,
-        });
+          delay: 0.2,
+        })
 
-        tl.fromTo(
+        .fromTo(
           letters,
           {
             opacity: 0,
@@ -218,6 +218,7 @@ const Showreel = () => {
           width: "100%",
           height: 0,
           borderRadius: "20px",
+          marginBottom: "-100px",
         }}
       >
         <iframe

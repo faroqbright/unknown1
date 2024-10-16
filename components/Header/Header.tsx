@@ -451,6 +451,7 @@ const Header = ({
           onPointerEnter={() => play()}
           onPointerLeave={() => stop()}
           className={`${s.logo} logo`}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           id="unknown-logo"
         >
           {/* <Logo /> */}
@@ -492,7 +493,7 @@ const Header = ({
   <div className={s.dotNavigation}>
     {/* First Column */}
     <div className={s.dotColumn}>
-      {components.slice(0, 3).map((comp, index) => {
+      {components.slice(0, 6).map((comp, index) => {
         const globalIndex = index;
         return (
           <div
@@ -501,7 +502,7 @@ const Header = ({
             onClick={() => handleScrollTo(globalIndex)}
           >
             <div className={s.nameContainer}>
-              <h1 className={s.name}>{comp.heading}</h1>
+              <a className={s.name}>{comp.heading}</a>
             </div>
           </div>
         );
@@ -509,7 +510,7 @@ const Header = ({
     </div>
 
     {/* Second Column */}
-    <div className={s.dotColumn}>
+    {/* <div className={s.dotColumn}>
       {components.slice(3, 6).map((comp, index) => {
         const globalIndex = index + 3;
         return (
@@ -524,7 +525,7 @@ const Header = ({
           </div>
         );
       })}
-    </div>
+    </div> */}
   </div>
 )}
 

@@ -45,16 +45,16 @@
 
 .heading {
   margin-inline: auto;
-  font-size: 5rem; 
+  font-size: 5rem;
   text-align: center;
   font-weight: 500;
   line-height: 0.9;
   @include lg {
     margin-bottom: 100px;
-      font-size: 11rem; 
-      text-align: center;
-      line-height: 0.8;
-    }
+    font-size: 11rem;
+    text-align: center;
+    line-height: 0.8;
+  }
   svg {
     width: 60vw;
     path {
@@ -139,7 +139,8 @@
     @include lg {
       gap: 0px;
       width: 40%;
-      max-height: 450px;
+      max-height: 340px;
+      margin-top: 45px;
     }
     @include xxl {
       max-height: 600px;
@@ -175,8 +176,8 @@
       line-height: calc(1.5rem * 1.5);
       font-weight: 400;
       @include lg {
-        font-size: clamp(1.8rem, 1.5vw + 1rem, 2.25rem);
-        line-height: calc(3rem * 1.4);
+        font-size: clamp(1.8rem, 1.5vw + 1rem, 2.5rem);
+        line-height: 1.5;
       }
       @include xxl {
         font-size: clamp(2rem, 2vw + 1rem, 2.8vw);
