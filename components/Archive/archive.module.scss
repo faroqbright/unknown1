@@ -122,10 +122,15 @@
   .card {
     &_box {
       @include lg {
-        padding-left: 180px;
+        padding-left: 100px;
         margin-top: 5px;
         margin-bottom: 100px;
       }}
+      &_img {
+        @include lg {
+        left: -15%;
+        }
+      }
   }
 }
 
@@ -133,8 +138,13 @@
   .card {
     &_box {
       @include lg {
-        padding-left: 120px;
+        padding-left: 80px;
       }}
+      &_img {
+        @include lg {
+        left: -5%;
+        }
+      }
   }
 }
 

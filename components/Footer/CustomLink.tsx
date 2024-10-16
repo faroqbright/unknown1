@@ -49,7 +49,7 @@ const CustomLink = ({ text, href }: { text: string; href: string }) => {
       <div>
         {Array.from(text).map((e, i) => {
           return (
-            <span className="inside" key={i}>
+            <span className={`${s.font} inside`} key={i}>
               {e}
             </span>
           );
@@ -58,7 +58,7 @@ const CustomLink = ({ text, href }: { text: string; href: string }) => {
       <div className={s.link_box}>
         {Array.from(text).map((e, i) => {
           return (
-            <span className="outside" key={i}>
+            <span className={`${s.font} outside`} key={i}>
               <RandomLetter />
             </span>
           );

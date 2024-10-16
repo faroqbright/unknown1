@@ -95,7 +95,7 @@ const Header = ({
       if (index <= 2) {
         offset = -150; // First three buttons have 200px offset
       } else {
-        offset = -160; // Next three buttons have 300px offset
+        offset = -135; // Next three buttons have 300px offset
       }
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset + offset;
@@ -427,6 +427,56 @@ const Header = ({
   useEffect(() => {
     stop();
   }, [stop]);
+  
+  const [isWhite, setIsWhite] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const isAnyElementVisible = entries.some(entry => entry.isIntersecting);
+        setIsWhite(isAnyElementVisible);
+      },
+      { rootMargin: "0px 0px -10% 0px",threshold: 0 } // Adjust threshold to suit your needs
+    );
+
+    // Select all img and video elements across the page
+    const targetElements = document.querySelectorAll("img, video");
+
+    targetElements.forEach((el) => observer.observe(el));
+
+    return () => {
+      targetElements.forEach((el) => observer.unobserve(el));
+    };
+  }, []);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.target.tagName === "IFRAME") {
+            setIsWhite(entry.isIntersecting); // Set text to white only when iframe fully leaves the viewport
+          }
+        });
+      },
+      {
+        rootMargin: "0px 0px -80% 0px", // Triggers when the bottom of the iframe leaves the viewport
+        threshold: 0
+      }
+    );
+
+    // Select the iframe element on the page
+    const iframeElement = document.querySelector("iframe");
+
+    if (iframeElement) {
+      observer.observe(iframeElement);
+    }
+
+    return () => {
+      if (iframeElement) {
+        observer.unobserve(iframeElement);
+      }
+    };
+  }, []);
 
   return (
     <div ref={container}>
@@ -490,43 +540,29 @@ const Header = ({
       </header>
 
       {!isNavOpen && (
-  <div className={s.dotNavigation}>
-    {/* First Column */}
-    <div className={s.dotColumn}>
-      {components.slice(0, 6).map((comp, index) => {
-        const globalIndex = index;
-        return (
-          <div
-            key={globalIndex}
-            className={s.dotWrapper}
-            onClick={() => handleScrollTo(globalIndex)}
-          >
-            <div className={s.nameContainer}>
-              <a className={s.name}>{comp.heading}</a>
-            </div>
+        <div className={s.dotNavigation}>
+  <div className={s.dotColumn}>
+    {components.slice(0, 6).map((comp, index) => {
+      const globalIndex = index;
+      return (
+        <div
+          key={globalIndex}
+          className={s.dotWrapper}
+          onClick={() => handleScrollTo(globalIndex)}
+        >
+          <div className={s.nameContainer}>
+            <a
+              className={`${s.name} ${isWhite ? s.whiteText : s.blackText}`} 
+              style={{ color: isWhite ? 'white' : 'black' }}
+            >
+              {comp.heading}
+            </a>
           </div>
-        );
-      })}
-    </div>
-
-    {/* Second Column */}
-    {/* <div className={s.dotColumn}>
-      {components.slice(3, 6).map((comp, index) => {
-        const globalIndex = index + 3;
-        return (
-          <div
-            key={globalIndex}
-            className={s.dotWrapper}
-            onClick={() => handleScrollTo(globalIndex)}
-          >
-            <div className={s.nameContainer}>
-              <h1 className={s.name}>{comp.heading}</h1>
-            </div>
-          </div>
-        );
-      })}
-    </div> */}
+        </div>
+      );
+    })}
   </div>
+</div>
 )}
 
       <nav className={`menu ${s.menu}`}>

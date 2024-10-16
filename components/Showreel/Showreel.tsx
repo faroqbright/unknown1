@@ -83,7 +83,8 @@ const Showreel = () => {
             rotationZ: 0,
             rotationY: -90,
             transformPerspective: 1000,
-            transformOrigin: "50% 50%",
+            // transformOrigin: "50% 50%",
+            transformOrigin: "center center",
           },
           {
             opacity: 1,
@@ -91,7 +92,7 @@ const Showreel = () => {
             rotationZ: 0,
             duration: 1.0,
             ease: "power3.out",
-            delay: index * 0.8,
+            delay: index * 0.8, 
           }
         ).to(word, {
           rotationY: 89,
@@ -108,7 +109,7 @@ const Showreel = () => {
             opacity: 0,
             rotationY: -90,
             transformPerspective: 1000,
-            transformOrigin: "50% 50%",
+            transformOrigin: "center center",
           },
           {
             opacity: 1,

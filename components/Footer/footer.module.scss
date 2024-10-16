@@ -70,6 +70,10 @@
   flex: 1; // Make sure it's aligned to the very left
 }
 
+.font {
+  font-family: Apercu, sans-serif;
+}
+
 .centerText {
   text-align: center; // Center the text
   flex: 1; // This ensures it takes up space and stays in the center

@@ -34,7 +34,7 @@ const Hero: React.FC = () => {
     const width = size?.width ?? 0; // Fallback to 0 if width is undefined
 
     if (width > 640) {
-      return showData2 ? import('./lottie/EndPortion.json') : import('./lottie/data.json');
+      return showData2 ? import('./lottie/dataend.json') : import('./lottie/datastart.json');
     }
     // Return null for SVG usage on mobile
     return null;
