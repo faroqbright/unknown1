@@ -439,7 +439,7 @@ const Header = ({
     stop();
   }, [stop]);
   
-  const [isWhite, setIsWhite] = useState(false);
+  const [isWhite, setIsWhite] = useState(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
