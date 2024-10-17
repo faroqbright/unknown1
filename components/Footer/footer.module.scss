@@ -47,7 +47,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between; // To align the text left, center, and right
-  padding-inline: 50px;
+  padding-inline: 100px;
   margin-top: 50px;
   align-items: center; // To vertically center the text
   
@@ -182,6 +182,43 @@
     display: flex;
   }
 }
+
+.links {
+  position: relative;
+  text-transform: uppercase;
+
+  &_box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-50%) translateY(-50%);
+    left: 50%;
+    top: 50%;
+    display: flex;
+    flex-direction: column; // Stack letters vertically
+    align-items: center; // Center align letters
+  }
+
+  span {
+    display: block; // Each letter is now a block
+    text-align: center;
+    line-height: 1.2; // Add spacing between letters if needed
+    font-size: 20px; // Adjust to desired size
+  }
+
+  .outside {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column; // Keep outside letters stacked
+    align-items: center; // Center align letters
+  }
+}
+
 
 .call {
   display: flex;

@@ -22,38 +22,27 @@ const Hero: React.FC = () => {
     threshold: 0.5,
   });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowData2(true);
-    }, 15800); // Switch to second GIF after 16 seconds
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const getAnimationData = async (): Promise<AnimationData | null> => {
-    const width = size?.width ?? 0; // Fallback to 0 if width is undefined
-
-    if (width > 640) {
-      return showData2 ? import('./lottie/dataend.json') : import('./lottie/datastart.json');
+  const loadAnimationData = async (showEnd: boolean) => {
+    try {
+      const data = showEnd ? await import('./lottie/end.json') : await import('./lottie/start.json');
+      setAnimationData(data.default);
+    } catch (error) {
+      console.error("Failed to load animation data:", error);
     }
-    // Return null for SVG usage on mobile
-    return null;
   };
 
   useEffect(() => {
-    const loadAnimation = async () => {
-      try {
-        const data = await getAnimationData();
-        setAnimationData(data?.default || null); // Set to null for SVG on mobile
-      } catch (error) {
-        console.error("Failed to load animation data:", error);
-      }
-    };
-
     if (inView) {
-      loadAnimation();
+      loadAnimationData(showData2);
     }
   }, [size, showData2, inView]);
+
+  const handleAnimationComplete = () => {
+    if (!showData2) {
+      setShowData2(true);
+      loadAnimationData(true); // Trigger loading of end.json immediately
+    }
+  };
 
   return (
     <section id="hero" className={s.main} ref={ref}>
@@ -69,6 +58,9 @@ const Hero: React.FC = () => {
                 autoplay: true,
                 animationData: animationData,
               }}
+              eventListeners={[
+                { eventName: "complete", callback: handleAnimationComplete }
+              ]}
             />
           )
         ) : (

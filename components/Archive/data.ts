@@ -64,7 +64,7 @@ export const data: Data[] = [
     heading: [
       "Client: Soekie Osk",
       "Projekt: dolor sit amet",
-      "Date: consetetur ",
+      "Date: consetetur",
     ],
     para: " Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus vero quaerat a, neque nostrum in assumenda facilis ipsam modi illo at vitae nobis blanditiis veritatis.",
     imgVarient: "square",

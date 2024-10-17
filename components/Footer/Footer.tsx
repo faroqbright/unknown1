@@ -65,17 +65,17 @@ const Footer = () => {
       </nav>
       <div className={`footer-nav-2 ${s.nav}`}>
         <CustomLink
-          href="https://www.linkedin.com/in/philippe-layani-56636a77"
+          href="https://www.linkedin.com/unknown"
           text="Linkedin"
         />
         {/* <CustomLink
           href="https://www.instagram.com/mudassir"
           text="Instagram"
         /> */}
-        <CustomLink href="https://www.behance.net/mudassir"
+        <CustomLink href="https://www.Twitter.net/unknown"
          text="Twitter" 
          />
-        <CustomLink href="https://www.behance.net/mudassir" 
+        <CustomLink href="https://www.behance.net/unknown" 
         text="Behance" 
         />
       </div>

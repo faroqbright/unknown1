@@ -130,7 +130,7 @@
   clip-path: inset(100% 0% 0%);
   @include lg {
     justify-content: space-between;
-    padding-top: 135px;
+    padding-top: 110px;
   }
   @include xxl {
     padding-top: 254px;
@@ -524,27 +524,51 @@
   line-height: 1.2; /* Adds spacing between letters */
 }
 
-.dot {
-  width: 12px;
-  height: 12px;
-  background-color: black;
-  border-radius: 50%;
-  // cursor: pointer;
-  transition: background-color 0.3s;
-  // margin-left: 10px; /* Space between the name and the dot */
-}
-
 .active {
   border: 3px solid black;
-  border-radius: 50%; 
+  border-radius: 50%;
   width: 40px;
   height: 40px;
+}
+
+.activeName {
+  text-decoration: underline; /* This adds the underline */
+  color: black; /* You can adjust the color if needed */
 }
 
 .dot:hover {
   background-color: #999;
 }
 
-.dot:last-of-type {
-  background-color: black;
+
+.nameContainer {
+  position: relative;
+}
+
+.randomLettersContainer {
+  position: absolute;
+  top: 100%; /* Position right below the heading */
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  overflow: visible;
+}
+
+.randomLetter {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.5);
+  transform: rotate(-90deg); /* Rotate each letter to match the column orientation */
+  animation: fallX 1.5s ease-out forwards;
+  opacity: 1;
+}
+
+@keyframes fallX {
+  0% {
+    opacity: 1;
+    transform: translateX(0) rotate(-90deg); /* Start position, matching column alignment */
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(50px) rotate(-90deg); /* Move 50px to the right along X-axis */
+  }
 }

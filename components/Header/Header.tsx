@@ -44,10 +44,25 @@ const Header = ({
   const [activeComponentName, setActiveComponentName] = useState(
     component[0].heading
   );
+  const [navTimeoutId, setNavTimeoutId] = useState<NodeJS.Timeout | null>(null); 
+  
   const toggleNav = () => {
-    setIsNavOpen((prev) => !prev); // Toggle navigation visibility
+    if (isNavOpen) {
+      const timeoutId = setTimeout(() => {
+        setIsNavOpen(false);
+        setNavTimeoutId(null); // Clear timeout ID after execution
+      }, 5000);
+  
+      setNavTimeoutId(timeoutId);
+    } else {
+      if (navTimeoutId) {
+        clearTimeout(navTimeoutId);
+        setNavTimeoutId(null);
+      }
+        setIsNavOpen(true);
+    }
   };
-
+  
   const components = [
     { heading: "Work", color: "#ADDBD0" },
     { heading: "Archive", color: "#83D398" },
@@ -58,17 +73,17 @@ const Header = ({
   ];
 
   const handleScroll = () => {
-    const sections = component.map(comp => document.getElementById(comp.heading.toLowerCase()));
-    const scrollPosition = window.scrollY  + window.innerHeight / 3; 
+    const sections = components.map(comp => document.getElementById(comp.heading.toLowerCase()));
+    const scrollPosition = window.scrollY + window.innerHeight / 3;
 
     sections.forEach((section, index) => {
       if (section) {
         const { offsetTop, clientHeight } = section;
 
-        // Check if the current scroll position is within the bounds of this section
-        if(scrollPosition >= offsetTop && scrollPosition < offsetTop + clientHeight) {
+        // Check if the current scroll position is within the section
+        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + clientHeight) {
           setActiveMenus(index);
-          // console.log(`Active section changed to: ${component[index].heading}`);
+          setActiveComponentName(components[index].heading); // Update the active component name
         }
       }
     });
@@ -83,13 +98,8 @@ const Header = ({
   }, []);
 
   const handleScrollTo = (index: number) => {
-    const element = document.querySelector(
-      `#${components[index].heading.toLowerCase()}`
-    );
+    const element = document.querySelector(`#${components[index].heading.toLowerCase()}`);
 
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
     if (element) {
       let offset;
       if (index <= 2) {
@@ -106,6 +116,7 @@ const Header = ({
       });
 
       setActiveMenus(index); // Set the new active button
+      setActiveComponentName(components[index].heading); // Update active component name
     }
   };
 
@@ -540,30 +551,34 @@ const Header = ({
       </header>
 
       {!isNavOpen && (
-        <div className={s.dotNavigation}>
-  <div className={s.dotColumn}>
-    {components.slice(0, 6).map((comp, index) => {
-      const globalIndex = index;
-      return (
-        <div
-          key={globalIndex}
-          className={s.dotWrapper}
-          onClick={() => handleScrollTo(globalIndex)}
-        >
-          <div className={s.nameContainer}>
-            <a
-              className={`${s.name} ${isWhite ? s.whiteText : s.blackText}`} 
-              style={{ color: isWhite ? 'white' : 'black' }}
-            >
-              {comp.heading}
-            </a>
-          </div>
+      <div className={s.dotNavigation}>
+        <div className={s.dotColumn}>
+          {components.slice(0, 6).map((comp, index) => {
+            const isActive = activeComponentName === comp.heading;
+
+            return (
+              <div
+                key={index}
+                className={s.dotWrapper}
+                onClick={() => {
+                  handleScrollTo(index);
+                }}
+              >
+                <div className={s.nameContainer}>
+                  <a
+                    className={`${s.name} ${isWhite ? s.whiteText : s.blackText} ${isActive ? s.activeName : ''}`}
+                    style={{ color: isWhite ? 'white' : 'black' }}
+                  >
+                    {comp.heading}
+                  </a>
+                </div>
+              </div>
+            );
+          })}
         </div>
-      );
-    })}
-  </div>
-</div>
-)}
+      </div>
+    )}
+  {/* ); */}
 
       <nav className={`menu ${s.menu}`}>
         {/* <MenuElements /> */}

@@ -9,7 +9,7 @@
   position: relative;
   padding-inline: 20px;
   height: 100vh;
-  margin-top: 40px;
+  margin-top: 60px;
   @include lg {
     margin-top: 0;
     height: 100vh;
@@ -54,7 +54,9 @@
   left: 50%;
   top: 50%;
   pointer-events: none;
-  padding: 130px;
+  @include lg {
+    padding: 130px;
+  }
 }
 
 .heading {
