@@ -183,6 +183,40 @@
   }
 }
 
+.linke {
+  position: relative;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center; /* Align horizontally to the center */
+  flex-direction: column;
+  a {
+    opacity: 1;
+    padding-inline: 15px;
+  }
+  span {
+    display: inline-block;
+    line-height: 0.6;
+  }
+  &_box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-50%) translateY(-50%);
+    left: 50%;
+    top: 35%;
+    display: flex;
+    transform: rotate(90deg) !important;
+    display: flex;
+    flex-direction: column; /* Makes the letters stack vertically */
+    align-items: center; 
+  }
+}
+
+.activeName {
+  text-decoration: underline ; /* This adds the underline */
+  // color: black ; /* You can adjust the color if needed */
+}
+
 .links {
   position: relative;
   text-transform: uppercase;

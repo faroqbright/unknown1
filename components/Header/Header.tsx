@@ -11,6 +11,7 @@ import CustomLink from "../Footer/CustomLink";
 import { useLottie } from "lottie-react";
 import PL from "./PL_logo.json";
 import { memo } from "react";
+import CustomLinkC from "../Footer/CustomLinkC";
 const Header = ({
   menuBtnEnter,
   menuBtnLeave,
@@ -19,6 +20,7 @@ const Header = ({
   menuBtnLeave: () => void;
 }) => {
   const header = useRef<HTMLElement>(null);
+  const [hoveredHeading, setHoveredHeading] = useState<string | null>(null);
   const logo = useRef<HTMLDivElement>(null);
   const container = useRef<HTMLDivElement>(null);
   const [color, setColor] = useState<string>();
@@ -44,25 +46,25 @@ const Header = ({
   const [activeComponentName, setActiveComponentName] = useState(
     component[0].heading
   );
-  const [navTimeoutId, setNavTimeoutId] = useState<NodeJS.Timeout | null>(null); 
-  
+  const [navTimeoutId, setNavTimeoutId] = useState<NodeJS.Timeout | null>(null);
+
   const toggleNav = () => {
     if (isNavOpen) {
       const timeoutId = setTimeout(() => {
         setIsNavOpen(false);
         setNavTimeoutId(null); // Clear timeout ID after execution
       }, 5000);
-  
+
       setNavTimeoutId(timeoutId);
     } else {
       if (navTimeoutId) {
         clearTimeout(navTimeoutId);
         setNavTimeoutId(null);
       }
-        setIsNavOpen(true);
+      setIsNavOpen(true);
     }
   };
-  
+
   const components = [
     { heading: "Work", color: "#ADDBD0" },
     { heading: "Archive", color: "#83D398" },
@@ -73,7 +75,9 @@ const Header = ({
   ];
 
   const handleScroll = () => {
-    const sections = components.map(comp => document.getElementById(comp.heading.toLowerCase()));
+    const sections = components.map((comp) =>
+      document.getElementById(comp.heading.toLowerCase())
+    );
     const scrollPosition = window.scrollY + window.innerHeight / 3;
 
     sections.forEach((section, index) => {
@@ -81,7 +85,10 @@ const Header = ({
         const { offsetTop, clientHeight } = section;
 
         // Check if the current scroll position is within the section
-        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + clientHeight) {
+        if (
+          scrollPosition >= offsetTop &&
+          scrollPosition < offsetTop + clientHeight
+        ) {
           setActiveMenus(index);
           setActiveComponentName(components[index].heading); // Update the active component name
         }
@@ -90,15 +97,17 @@ const Header = ({
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    
+    window.addEventListener("scroll", handleScroll);
+
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const handleScrollTo = (index: number) => {
-    const element = document.querySelector(`#${components[index].heading.toLowerCase()}`);
+    const element = document.querySelector(
+      `#${components[index].heading.toLowerCase()}`
+    );
 
     if (element) {
       let offset;
@@ -136,7 +145,9 @@ const Header = ({
             } else if (visibleIndex > 1) {
               setActiveMenus(visibleIndex); // For others
             } // Update activeMenus based on the visible section
-            console.log(`Active section changed to: ${component[visibleIndex].heading}`);
+            console.log(
+              `Active section changed to: ${component[visibleIndex].heading}`
+            );
           }
         });
       },
@@ -144,7 +155,7 @@ const Header = ({
         threshold: 0.1,
         rootMargin: "0px 0px -50% 0px", // Multiple thresholds to catch entry and exit points
       }
-    );    
+    );
 
     // Observe each section
     component.forEach((comp) => {
@@ -152,7 +163,7 @@ const Header = ({
       if (element) {
         observer.observe(element);
       } else {
-        console.error('Section element not found for:', comp.heading);
+        console.error("Section element not found for:", comp.heading);
       }
     });
 
@@ -438,16 +449,19 @@ const Header = ({
   useEffect(() => {
     stop();
   }, [stop]);
-  
-  const [isWhite, setIsWhite] = useState(false);
+
+  const [isWhite, setIsWhite] = useState(true);
+  const headings = ["Work", "Archive", "Clients", "Services", "About", "Contact"];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        const isAnyElementVisible = entries.some(entry => entry.isIntersecting);
+        const isAnyElementVisible = entries.some(
+          (entry) => entry.isIntersecting
+        );
         setIsWhite(isAnyElementVisible);
       },
-      { rootMargin: "0px 0px -10% 0px",threshold: 0 } // Adjust threshold to suit your needs
+      { rootMargin: "0px 0px -10% 0px", threshold: 0 } // Adjust threshold to suit your needs
     );
 
     // Select all img and video elements across the page
@@ -459,7 +473,7 @@ const Header = ({
       targetElements.forEach((el) => observer.unobserve(el));
     };
   }, []);
-  
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -471,7 +485,7 @@ const Header = ({
       },
       {
         rootMargin: "0px 0px -80% 0px", // Triggers when the bottom of the iframe leaves the viewport
-        threshold: 0
+        threshold: 0,
       }
     );
 
@@ -512,7 +526,7 @@ const Header = ({
           onPointerEnter={() => play()}
           onPointerLeave={() => stop()}
           className={`${s.logo} logo`}
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           id="unknown-logo"
         >
           {/* <Logo /> */}
@@ -535,7 +549,11 @@ const Header = ({
               <div>
                 {Array.from("Menu").map((e, i) => {
                   return (
-                    <span style={{ fontFamily: 'soalDisplay'}} className="menuoutside" key={i}>
+                    <span
+                      style={{ fontFamily: "soalDisplay" }}
+                      className="menuoutside"
+                      key={i}
+                    >
                       <RandomLetter />
                     </span>
                   );
@@ -550,35 +568,31 @@ const Header = ({
         </div>
       </header>
 
-      {!isNavOpen && (
-      <div className={s.dotNavigation}>
-        <div className={s.dotColumn}>
-          {components.slice(0, 6).map((comp, index) => {
-            const isActive = activeComponentName === comp.heading;
-
-            return (
+{!isNavOpen && (
+  <div className={s.dotNavigation}>
+    <div className={s.dotColumn}>
+      {headings.map((heading, index) => {
+        const isActive = activeComponentName === heading; 
+        return (
+          <div key={heading} className={s.dotWrapper}>
+            <div className={s.nameContainer}>
               <div
-                key={index}
-                className={s.dotWrapper}
-                onClick={() => {
-                  handleScrollTo(index);
-                }}
+                className={`${s.name} ${isWhite ? s.whiteText : s.blackText} ${isActive ?  `${s.activeName} ${s.whiteText}` : ''}`} 
+                onClick={() => handleScrollTo(index)} 
+                style={{ color: isWhite ? 'white' : 'black' }}
               >
-                <div className={s.nameContainer}>
-                  <a
-                    className={`${s.name} ${isWhite ? s.whiteText : s.blackText} ${isActive ? s.activeName : ''}`}
-                    style={{ color: isWhite ? 'white' : 'black' }}
-                  >
-                    {comp.heading}
-                  </a>
-                </div>
+                <CustomLinkC text={heading} isActive={isActive} /> 
               </div>
-            );
-          })}
-        </div>
-      </div>
-    )}
-  {/* ); */}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+)}
+
+
+      {/* ); */}
 
       <nav className={`menu ${s.menu}`}>
         {/* <MenuElements /> */}

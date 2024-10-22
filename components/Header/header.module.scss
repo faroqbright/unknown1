@@ -466,6 +466,24 @@
   }
 }
 
+.menufloats {
+  position: relative;
+  div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-50%) translateY(-50%);
+    left: 50%;
+    // top: 10%;
+    pointer-events: none;
+    transform: rotate(270deg);
+    span {
+      display: inline-block;
+      opacity: 0;
+    }
+  }
+}
+
 .dotNavigation {
   position: fixed;
   top: 48%;
@@ -513,14 +531,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60px; /* Adjust height to accommodate the vertical text */
+  // height: 60px; 
+  // transform: rotate(360deg);/* Adjust height to accommodate the vertical text */
 }
 
 .name {
   font-size: 20px;
   text-align: center;
   writing-mode: vertical-rl; /* Makes the text vertical */
-  transform: rotate(180deg); /* Flips the text so it's read from bottom to top */
+  transform: rotate(180deg) !important; /* Flips the text so it's read from bottom to top */
   line-height: 1.2; /* Adds spacing between letters */
 }
 
@@ -531,10 +550,10 @@
   height: 40px;
 }
 
-.activeName {
-  text-decoration: underline; /* This adds the underline */
-  color: black; /* You can adjust the color if needed */
-}
+// .activeName {
+//   text-decoration: underline !important; /* This adds the underline */
+//   color: black !important; /* You can adjust the color if needed */
+// }
 
 .dot:hover {
   background-color: #999;
@@ -543,32 +562,4 @@
 
 .nameContainer {
   position: relative;
-}
-
-.randomLettersContainer {
-  position: absolute;
-  top: 100%; /* Position right below the heading */
-  left: 50%;
-  transform: translateX(-50%);
-  pointer-events: none;
-  overflow: visible;
-}
-
-.randomLetter {
-  font-size: 16px;
-  color: rgba(0, 0, 0, 0.5);
-  transform: rotate(-90deg); /* Rotate each letter to match the column orientation */
-  animation: fallX 1.5s ease-out forwards;
-  opacity: 1;
-}
-
-@keyframes fallX {
-  0% {
-    opacity: 1;
-    transform: translateX(0) rotate(-90deg); /* Start position, matching column alignment */
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(50px) rotate(-90deg); /* Move 50px to the right along X-axis */
-  }
 }
