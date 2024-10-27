@@ -105,18 +105,18 @@ const Work = () => {
                 preventOverlaps: isDesktop,
               },
               defaults: {
-                ease: "power2.out", // Change ease to a slower one for smoother effect
+                ease: "power1.out", // Change ease to a slower one for smoother effect
               },
             })
             .from(".work-heading path", {
               strokeDashoffset: 2340,
-              duration: 1.8, // Increased duration
+              duration: 2, // Increased duration
               ease: "none",
             })
             .to(".work-heading path", {
-              duration: 1.8, // Increased duration
+              duration: 2, // Increased duration
               fill: "black",
-              ease: "power2.inOut", // Adjust easing
+              ease: "power1.inOut", // Adjust easing
             });
   
           let tl = gsap.timeline({
@@ -124,7 +124,7 @@ const Work = () => {
               trigger: `.slider`,
               start: isDesktop ? "top+=100 top" : "top top",
               end: "bottom+=8000 bottom",
-              scrub: 1.2, // Slower scrub rate for smoother scrolling effect
+              scrub: 2.5, // Slower scrub rate for smoother scrolling effect
               pin: true,
               pinSpacing: true,
             },
@@ -138,29 +138,29 @@ const Work = () => {
               .from(`.slide-${i}`, { yPercent: i === 0 ? 0 : 100 }, "<")
               .from(`.work-path-${i + 1}`, {
                 scale: 0,
-                duration: 1.5, // Increased duration for slower scaling effect
+                duration: 2.5, // Increased duration for slower scaling effect
                 ease: "power2.out", // Slower easing
               })
               .from(`.image-${i}`, {
                 left: isDesktop ? "130%" : "80%",
                 top: isDesktop ? "60%" : "100%",
                 rotate: -40,
-                duration: 6, // Increased duration for slower movement
+                duration: 5.5, // Increased duration for slower movement
               }, "<") // Image starts moving immediately
               .from(`.heading-${i}`, {
                 scale: 0.8,
-                duration: 0.8, // Slightly slower
+                duration: 1.5, // Slightly slower
                 ease: "power2.out", // Adjust easing
               }, "-=6") // Heading animation starts with image animation
               .to(`.heading-${i}`, {
                 scale: 1.1,
-                duration: 6, // Slow down to match image movement
+                duration: 5.5, // Slow down to match image movement
                 ease: "power2.out",
               }, "<") // Heading scaling happens simultaneously
               .call(() => setCounter(i + 1))
               .to(`.work-path-${i + 1}`, {
                 scale: 0,
-                duration: 0.5, // Increased duration for slower scale-down
+                duration: 1.5, // Increased duration for slower scale-down
                 ease: "power2.out",
               });
           });

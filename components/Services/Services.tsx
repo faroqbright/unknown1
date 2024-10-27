@@ -161,11 +161,11 @@ const Services = () => {
         .to(".menu svg", { rotate: 243 })
         .to(`.slide-4`, { clipPath: "circle(100% at 50% 50%)" }, "<0.3")
         .from(".service-path-9", { scale: 4, yPercent: -100 }, "<0.2")
-        .to(".menu svg", { rotate: 206 })
+        .to(".menu svg", { rotate: 195 })
         .to(`.slide-5`, { clipPath: "circle(100% at 50% 50%)" }, "<0.3")
         .from(".service-path-11", { yPercent: -100 })
         .from(".service-path-10", { scale: 4, opacity: 0 }, "<0.2")
-        .to(".menu svg", { rotate: 152 })
+        .to(".menu svg", { rotate: 132 })
         .to(`.slide-6`, { clipPath: "circle(100% at 50% 50%)" }, "<0.3")
         .from(".service-path-12 path", { opacity: 0, stagger: 0.05 })
         .from(".service-path-13", { yPercent: 100 }, "<0.2")
@@ -215,7 +215,7 @@ const Services = () => {
               className={`slide-${i} ${s.slide}`}
             >
               {/* <Elements id={i} /> */}
-              <h3 style={{marginBottom: 130}} >{heading}</h3>
+              <h3 style={{marginBottom: 100}} >{heading}</h3>
             </div>
           );
         })}

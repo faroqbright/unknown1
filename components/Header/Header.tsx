@@ -3,9 +3,7 @@ import { MenuLine } from "../Svg/Svg";
 import s from "./header.module.scss";
 import { useGSAP } from "@gsap/react";
 import gsap, { Power4 } from "gsap";
-// import Elements from "./Elements";
 import Link from "next/link";
-import MenuElements from "./MenuElements";
 import RandomLetter from "../Footer/RandomLetter";
 import CustomLink from "../Footer/CustomLink";
 import { useLottie } from "lottie-react";
@@ -20,7 +18,6 @@ const Header = ({
   menuBtnLeave: () => void;
 }) => {
   const header = useRef<HTMLElement>(null);
-  const [hoveredHeading, setHoveredHeading] = useState<string | null>(null);
   const logo = useRef<HTMLDivElement>(null);
   const container = useRef<HTMLDivElement>(null);
   const [color, setColor] = useState<string>();
@@ -42,7 +39,7 @@ const Header = ({
     { heading: "Contact" },
   ];
   const [activeMenus, setActiveMenus] = useState(0);
-  const [isNavOpen, setIsNavOpen] = useState(false); // State to track navigation visibility
+  const [isNavOpen, setIsNavOpen] = useState(false); 
   const [activeComponentName, setActiveComponentName] = useState(
     component[0].heading
   );
@@ -52,8 +49,8 @@ const Header = ({
     if (isNavOpen) {
       const timeoutId = setTimeout(() => {
         setIsNavOpen(false);
-        setNavTimeoutId(null); // Clear timeout ID after execution
-      }, 5000);
+        setNavTimeoutId(null); 
+      }, 4500);
 
       setNavTimeoutId(timeoutId);
     } else {
@@ -83,14 +80,12 @@ const Header = ({
     sections.forEach((section, index) => {
       if (section) {
         const { offsetTop, clientHeight } = section;
-
-        // Check if the current scroll position is within the section
         if (
           scrollPosition >= offsetTop &&
           scrollPosition < offsetTop + clientHeight
         ) {
           setActiveMenus(index);
-          setActiveComponentName(components[index].heading); // Update the active component name
+          setActiveComponentName(components[index].heading); 
         }
       }
     });
@@ -108,43 +103,65 @@ const Header = ({
     const element = document.querySelector(
       `#${components[index].heading.toLowerCase()}`
     );
-
+  
     if (element) {
       let offset;
       if (index <= 2) {
-        offset = -150; // First three buttons have 200px offset
+        offset = -150; 
       } else {
-        offset = -135; // Next three buttons have 300px offset
+        offset = -135; 
       }
+  
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset + offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-
-      setActiveMenus(index); // Set the new active button
-      setActiveComponentName(components[index].heading); // Update active component name
+      const targetPosition = elementPosition + window.pageYOffset + offset;
+  
+      // Set duration based on the index
+      const duration = index <= 1 ? 3000 : 2000; // 3 seconds for the first two, 2 seconds for others
+      const startPosition = window.pageYOffset;
+      const distance = targetPosition - startPosition;
+      let startTime: number | null = null;
+  
+      const smoothScroll = (currentTime: number) => {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1); // Ensure progress is within [0, 1]
+  
+        const scrollTo = startPosition + distance * easeInOutQuad(progress);
+        window.scrollTo(0, scrollTo);
+  
+        if (progress < 1) {
+          requestAnimationFrame(smoothScroll);
+        }
+      };
+  
+      // Easing function for smooth effect
+      const easeInOutQuad = (t: number) => {
+        return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      };
+  
+      requestAnimationFrame(smoothScroll);
+  
+      setActiveMenus(index);
+      setActiveComponentName(components[index].heading);
     }
   };
+  
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // Check if section is entering or exiting based on intersectionRatio
           if (entry.isIntersecting) {
             const visibleIndex = component.findIndex(
               (comp) => comp.heading.toLowerCase() === entry.target.id
             );
             if (visibleIndex === 0) {
-              setActiveMenus(0); // First section
+              setActiveMenus(0);
             } else if (visibleIndex === 1) {
-              setActiveMenus(1); // Second section
+              setActiveMenus(1);
             } else if (visibleIndex > 1) {
-              setActiveMenus(visibleIndex); // For others
-            } // Update activeMenus based on the visible section
+              setActiveMenus(visibleIndex);
+            } 
             console.log(
               `Active section changed to: ${component[visibleIndex].heading}`
             );
@@ -153,11 +170,10 @@ const Header = ({
       },
       {
         threshold: 0.1,
-        rootMargin: "0px 0px -50% 0px", // Multiple thresholds to catch entry and exit points
+        rootMargin: "0px 0px -50% 0px", 
       }
     );
 
-    // Observe each section
     component.forEach((comp) => {
       const element = document.getElementById(comp.heading.toLowerCase());
       if (element) {
@@ -167,7 +183,6 @@ const Header = ({
       }
     });
 
-    // Clean up observer on unmount
     return () => {
       component.forEach((comp) => {
         const element = document.getElementById(comp.heading.toLowerCase());
@@ -177,23 +192,6 @@ const Header = ({
       });
     };
   }, []);
-
-  const getDisplayedButtons = () => {
-    if (components.length <= 3) {
-      return components; // If fewer than 3 buttons, return all
-    }
-
-    if (activeMenus === 0) {
-      return components.slice(0, 3); // If at the start, show the first three
-    }
-
-    if (activeMenus === components.length - 1) {
-      return components.slice(-3); // If at the end, show the last three
-    }
-
-    // Otherwise, show the previous, current, and next buttons
-    return components.slice(activeMenus - 1, activeMenus + 2);
-  };
 
   const { contextSafe } = useGSAP(
     () => {
@@ -233,14 +231,14 @@ const Header = ({
           { top: "50%", y: "-50%", rotate: -45, duration: 0.5 },
           "<"
         )
-        .to(header.current!, { opacity: 0 })
+        .to(header.current!, { opacity: 0, duration: 2 })
         .to(".large", { opacity: 1, duration: 0.5 }, "<")
         .from(".large-text-1", { xPercent: 100, duration: 1 }, "<0.3")
         .from(".large-text-2", { xPercent: -100, duration: 1 }, "<")
         .to(".large", { rotate: -90, scale: 2, duration: 1 }, "<0.6")
         .to(".large-text-1", { xPercent: 80, duration: 2 }, "<0.5")
         .to(".large-text-2", { xPercent: -80, duration: 2 }, "<")
-        .to(header.current!, { opacity: 1 }, "<0.6")
+        .to(header.current!, { opacity: 1, duration: 2 }, "<0.1")
         .to(".menu", { clipPath: "inset(0% 0% 0% 0%)" }, "<")
         .from(".path-menu-1", { x: -400, y: -100 }, "<0.2")
         .from(".path-menu-2", { x: -500, y: 100 }, "<0.1")
@@ -451,26 +449,42 @@ const Header = ({
   }, [stop]);
 
   const [isWhite, setIsWhite] = useState(true);
-  const headings = ["Work", "Archive", "Clients", "Services", "About", "Contact"];
+  const headings = [
+    "Work",
+    "Archive",
+    "Clients",
+    "Services",
+    "About",
+    "Contact",
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        const isAnyElementVisible = entries.some(
-          (entry) => entry.isIntersecting
-        );
+        const isAnyElementVisible = entries.some((entry) => entry.isIntersecting);
         setIsWhite(isAnyElementVisible);
       },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0 } // Adjust threshold to suit your needs
+      { rootMargin: "0px 0px -10% 0px", threshold: 0 }
     );
-
-    // Select all img and video elements across the page
+  
     const targetElements = document.querySelectorAll("img, video");
-
-    targetElements.forEach((el) => observer.observe(el));
-
+  
+    targetElements.forEach((el) => {
+      const parentSection = el.closest("section");
+      // Check if the parent section is not "clients" or "archive"
+      if (parentSection && parentSection.id !== "clients" && parentSection.id !== "archive") {
+        observer.observe(el);
+      }
+    });
+  
     return () => {
-      targetElements.forEach((el) => observer.unobserve(el));
+      targetElements.forEach((el) => {
+        const parentSection = el.closest("section");
+        // Unobserve for sections that are not "clients" or "archive"
+        if (parentSection && parentSection.id !== "clients" && parentSection.id !== "archive") {
+          observer.unobserve(el);
+        }
+      });
     };
   }, []);
 
@@ -479,17 +493,16 @@ const Header = ({
       (entries) => {
         entries.forEach((entry) => {
           if (entry.target.tagName === "IFRAME") {
-            setIsWhite(entry.isIntersecting); // Set text to white only when iframe fully leaves the viewport
+            setIsWhite(entry.isIntersecting);
           }
         });
       },
       {
-        rootMargin: "0px 0px -80% 0px", // Triggers when the bottom of the iframe leaves the viewport
+        rootMargin: "0px 0px -80% 0px", 
         threshold: 0,
       }
     );
 
-    // Select the iframe element on the page
     const iframeElement = document.querySelector("iframe");
 
     if (iframeElement) {
@@ -517,9 +530,6 @@ const Header = ({
           );
         })}
       </div>
-      {/* 
-      Removing Animated Style
-      <Elements /> */}
       <header ref={header} id="unknown-header" className={s.main}>
         <div
           ref={logo}
@@ -529,7 +539,6 @@ const Header = ({
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           id="unknown-logo"
         >
-          {/* <Logo /> */}
           {View}
         </div>
         <div className={s.menuBtn}>
@@ -568,34 +577,32 @@ const Header = ({
         </div>
       </header>
 
-{!isNavOpen && (
-  <div className={s.dotNavigation}>
-    <div className={s.dotColumn}>
-      {headings.map((heading, index) => {
-        const isActive = activeComponentName === heading; 
-        return (
-          <div key={heading} className={s.dotWrapper}>
-            <div className={s.nameContainer}>
-              <div
-                className={`${s.name} ${isWhite ? s.whiteText : s.blackText} ${isActive ?  `${s.activeName} ${s.whiteText}` : ''}`} 
-                onClick={() => handleScrollTo(index)} 
-                style={{ color: isWhite ? 'white' : 'black' }}
-              >
-                <CustomLinkC text={heading} isActive={isActive} /> 
-              </div>
-            </div>
+      {!isNavOpen && (
+        <div className={s.dotNavigation}>
+          <div className={s.dotColumn}>
+            {headings.map((heading, index) => {
+              const isActive = activeComponentName === heading;
+              return (
+                <div key={heading} className={s.dotWrapper}>
+                  <div className={s.nameContainer}>
+                    <div
+                      className={`${s.name} ${
+                        isWhite ? s.whiteText : s.blackText
+                      } ${isActive ? `${s.activeName} ${s.whiteText}` : ""}`}
+                      onClick={() => handleScrollTo(index)}
+                      style={{ color: isWhite ? "white" : "black" }}
+                    >
+                      <CustomLinkC text={heading} isActive={isActive} />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        );
-      })}
-    </div>
-  </div>
-)}
-
-
-      {/* ); */}
+        </div>
+      )}
 
       <nav className={`menu ${s.menu}`}>
-        {/* <MenuElements /> */}
         <div className={s.menu_grid}>
           {[
             { heading: "Work", color: "#ADDBD0" },
@@ -609,10 +616,7 @@ const Header = ({
               <div
                 key={i}
                 data-active={i === activeMenu}
-                onClick={() => {
-                  // setActiveMenu Removes onclick event, Line drawing event
-                  // setActiveMenu(i);
-                }}
+                onClick={() => {}}
                 onPointerEnter={() => handlePointerEnter(e.color, i)}
                 onPointerLeave={() => handlePointerLeave()}
                 className={s.menuCover}
@@ -620,7 +624,6 @@ const Header = ({
                 <MenuLine />
                 <div key={i} className={s.menu3D}>
                   <div className={s.menu3D_bottom}>
-                    {/* On Click Links */}
                     <Link
                       scroll={false}
                       onClick={handleClick}
@@ -632,12 +635,7 @@ const Header = ({
                     </Link>
                   </div>
                   <div className={s.menu3D_front}>
-                    <Link
-                      scroll={false}
-                      className="menu-link"
-                      href="#"
-                      // href={`#${e.heading.toLowerCase()}`}
-                    >
+                    <Link scroll={false} className="menu-link" href="#">
                       {e.heading}
                       <span>0{i + 1}</span>
                     </Link>
@@ -646,54 +644,10 @@ const Header = ({
               </div>
             );
           })}
-
-          {/* <Link
-            className="menu-link"
-            data-active={asPath === "/#work"}
-            href="#work"
-          >
-            Work<span>01</span>
-          </Link>
-           <Link
-            className="menu-link"
-            data-active={asPath === "/#archive"}
-            href="#archive"
-          >
-            Archive<span>02</span>
-          </Link>
-          <Link
-            className="menu-link"
-            data-active={asPath === "/#clients"}
-            href="#clients"
-          >
-            Clients<span>03</span>
-          </Link>
-          <Link
-            className="menu-link"
-            data-active={asPath === "/#services"}
-            href="#services"
-          >
-            Services<span>04</span>
-          </Link>
-          <Link
-            className="menu-link"
-            data-active={asPath === "/#about"}
-            href="#about"
-          >
-            About<span>05</span>
-          </Link>
-          <Link
-            className="menu-link"
-            data-active={asPath === "/#contact"}
-            href="#contact"
-          >
-            Contact<span>06</span>
-          </Link> */}
         </div>
 
         <div className={`menu-social ${s.menu_social}`}>
           <CustomLink href="/" text="Linkedin" />
-          {/* <CustomLink href="/" text="Instagram" /> */}
           <CustomLink href="/" text="Behance" />
           <CustomLink href="/" text="Twitter" />
         </div>
