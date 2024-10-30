@@ -45,14 +45,14 @@ const CustomLinkC = ({ text, isActive }: { text: string; isActive?: boolean }) =
     >
       <div>
         {Array.from(text).map((e, i) => (
-          <span className={`${s.font} inside  ${isActive ? s.activeName : ''}`} key={i}>
+          <span className={`${s.fonts} inside  ${isActive ? s.activeName : ''}`} key={i}>
             {e}
           </span>
         ))}
       </div>
       <div className={s.linke_box}>
         {Array.from(text).map((e, i) => (
-          <span className={`${s.font} outside`} key={i}>
+          <span className={`${s.fonts} outside`} key={i}>
             <RandomLetter />
           </span>
         ))}

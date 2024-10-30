@@ -6,12 +6,48 @@ import { data } from "./data";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 // import { ArchiveHeading } from "../Svg/Svg";
-import { memo } from "react"
+import { memo } from "react";
+import Image from "next/image";
 
 const Archive = () => {
   const container = useRef<HTMLElement>(null);
   const grid = useRef<HTMLDivElement>(null);
   const heading = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const animationTimeline = useRef<gsap.core.Timeline | null>(null);
+
+  useEffect(() => {
+    // Create a timeline for the animation
+    animationTimeline.current = gsap
+      .timeline({ paused: true })
+      .to(imageRef.current, {
+        y: 30, // Adjust movement distance
+        duration: 0.5,
+        ease: "power1.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+
+    const imageElement = imageRef.current;
+
+    // Event listeners for mouse enter and leave
+    if (imageElement) {
+      const handleMouseEnter = () => animationTimeline.current?.play();
+      const handleMouseLeave = () => {
+        animationTimeline.current?.pause();
+        gsap.set(imageRef.current, { y: 0 });
+      };
+
+      imageElement.addEventListener("mouseenter", handleMouseEnter);
+      imageElement.addEventListener("mouseleave", handleMouseLeave);
+
+      // Cleanup function to remove event listeners
+      return () => {
+        imageElement.removeEventListener("mouseenter", handleMouseEnter);
+        imageElement.removeEventListener("mouseleave", handleMouseLeave);
+      };
+    }
+  }, []);
 
   useEffect(() => {
     if (heading.current) {
@@ -46,35 +82,36 @@ const Archive = () => {
             ease: "power3.out",
             delay: index * 0.6,
           }
-        ).to(word, {
-          rotationY: 89,
-          rotationZ: 8,
-          opacity: 1,
-          duration: 2.0,
-          ease: "power3.out",
-          delay: 0.5,
-        })
-
-        .fromTo(
-          letters,
-          {
-            opacity: 0,
-            rotationY: -90,
-            transformPerspective: 1000,
-            transformOrigin: "50% 50%",
-          },
-          {
+        )
+          .to(word, {
+            rotationY: 89,
+            rotationZ: 8,
             opacity: 1,
-            rotationY: 0,
-            stagger: {
-              each: 0.1,
-              from: "end",
-            },
-            duration: 1,
+            duration: 2.0,
             ease: "power3.out",
-          },
-          0
-        );
+            delay: 0.5,
+          })
+
+          .fromTo(
+            letters,
+            {
+              opacity: 0,
+              rotationY: -90,
+              transformPerspective: 1000,
+              transformOrigin: "50% 50%",
+            },
+            {
+              opacity: 1,
+              rotationY: 0,
+              stagger: {
+                each: 0.1,
+                from: "end",
+              },
+              duration: 1,
+              ease: "power3.out",
+            },
+            0
+          );
       });
     }
   }, []);
@@ -352,7 +389,7 @@ const Archive = () => {
     <section id="archive" ref={container} className={s.main}>
       {/* <Elements /> */}
       <div ref={heading} className={`archive-heading ${s.heading}`}>
-      <div className="word">
+        <div className="word">
           {"Past".split("").map((letter, index) => (
             <span key={index} className="letter">
               {letter}
@@ -374,10 +411,30 @@ const Archive = () => {
           ))}
         </div>
       </div>
-      <div ref={grid} className={s.grid}>
-        {[...data].map((e, i) => {
-          return <Card id={i} {...e} key={i} />;
-        })}
+      <div>
+        {/* <Image
+          ref={imageRef}
+          className={s.image}
+          src="/Group4.svg"
+          alt="Background SVG"
+          height={100}
+          width={100}
+          loading="lazy"
+        />
+        <Image
+          ref={imageRef}
+          className={`${s.images} ${s.rotate}`}
+          src="/Group5.svg"
+          alt="Background SVG"
+          height={100}
+          width={100}
+          loading="lazy"
+        /> */}
+        <div ref={grid} className={s.grid}>
+          {[...data].map((e, i) => {
+            return <Card id={i} {...e} key={i} />;
+          })}
+        </div>
       </div>
     </section>
   );

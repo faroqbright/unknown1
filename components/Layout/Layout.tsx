@@ -15,7 +15,6 @@ const Layout: React.FC<Props> = ({ children }) => {
   const mouseHover = useRef<GSAPTween>();
   const xTo = useRef<gsap.QuickToFunc>();
   const yTo = useRef<gsap.QuickToFunc>();
-  const [initialized, setInitialized] = useState(false);
 
   const { contextSafe } = useGSAP(
     () => {
@@ -31,15 +30,15 @@ const Layout: React.FC<Props> = ({ children }) => {
       mouseHover.current = gsap.to(".mouse", {
         scale: 0.4,
         ease: "power4",
-        duration: 0.8,
+        duration: 0.3,
         background: "transparent",
         paused: true,
       });
 
       let tl = gsap
         .timeline({ paused: true })
-        .to(".mouse", { scale: 0.6 })
-        .to(".mousepara", { opacity: 1 }, "<0.4");
+        .to(".mouse", { scale: 0.6, duration: 0.3 })
+        .to(".mousepara", { opacity: 1, duration: 0.2 }, "<0.2");
 
       store.workHeadingPointerEnter = () => {
         tl.play();

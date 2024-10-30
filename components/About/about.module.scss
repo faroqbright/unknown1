@@ -87,6 +87,7 @@
   max-width: 920px;
   height: auto; // Avoid fixed height to prevent empty spaces as text size adjusts
   padding-right: 20px;
+  padding-top: 3px;
   
   @include lg {
     font-size: clamp(1.8rem, 1.5vw + 1rem, 2.5rem);
@@ -127,7 +128,8 @@
   height: 400px;
   object-fit: cover;
   @include lg {
-    width: 458px;
+    width: 468px;
+    height: 420px;
   }
   @include xxl {
     width: 33.5vw;

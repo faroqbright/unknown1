@@ -40,13 +40,13 @@ export const data: Data[] = [
     heading: "Visual Identity",
     desc: "I specialize in crafting distinctive visual elements that encapsulate your story and resonate with your audience. Let me elevate your brand’s recognition and leave a lasting impression with my unique design touch.",
     color: "#F6F2E9",
-    deg: 206,
+    deg: 230,
   },
   {
     heading: "Conversion Rate Optimization",
     desc: "Boost your online success with Conversion Rate Optimization (CRO). I analyze, refine, and enhance user experiences, turning clicks into conversions. Elevate your website’s performance and maximize your digital impact with my CRO expertise.",
     color: "#EBEBEB",
-    deg: 152,
+    deg: 192,
   },
   {
     heading: "SEO & Lead generation",
