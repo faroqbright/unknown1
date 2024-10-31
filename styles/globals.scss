@@ -1,4 +1,5 @@
 @import "./breakpoint";
+@import "./tailwind.css";
 
 *,
 *::after,
@@ -54,6 +55,10 @@ h2 {
 span {
   font-family: SaolDisplay;
   font-weight: 100;
+}
+
+.saolfont {
+  font-family: SaolDisplay;
 }
 
 html.lenis,
