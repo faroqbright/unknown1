@@ -40,6 +40,11 @@
     }
   }
 }
+@media screen and (max-width: 500px) {
+  .logo {
+    left: 10%;
+  }
+}
 
 .menuBtn {
   display: flex;
@@ -531,7 +536,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  // height: 90px; 
+  // height: 90px;
   // transform: rotate(360deg);/* Adjust height to accommodate the vertical text */
 }
 
@@ -539,7 +544,9 @@
   font-size: 20px;
   text-align: center;
   writing-mode: vertical-rl; /* Makes the text vertical */
-  transform: rotate(180deg) !important; /* Flips the text so it's read from bottom to top */
+  transform: rotate(
+    180deg
+  ) !important; /* Flips the text so it's read from bottom to top */
   // line-height: 1.2; /* Adds spacing between letters */
 }
 
@@ -558,7 +565,6 @@
 .dot:hover {
   background-color: #999;
 }
-
 
 .nameContainer {
   position: relative;

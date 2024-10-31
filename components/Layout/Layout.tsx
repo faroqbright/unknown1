@@ -4,7 +4,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { store } from "@/store";
 import Preloader from "../Preloader/Preloader";
-import { memo } from "react"
+import { memo } from "react";
 
 type Props = {
   children: React.ReactNode;
@@ -69,7 +69,7 @@ const Layout: React.FC<Props> = ({ children }) => {
       yTo.current?.(parseFloat(storedY));
     } else {
       xTo.current?.(window.innerWidth / 2 - 90);
-      yTo.current?.(window.innerHeight / 2 - 90); 
+      yTo.current?.(window.innerHeight / 2 - 90);
     }
 
     const showMouseAfterDelay = () => {
@@ -78,14 +78,14 @@ const Layout: React.FC<Props> = ({ children }) => {
         if (mouseElement) {
           mouseElement.classList.remove("hidden");
         }
-      }, 100); 
+      }, 100);
     };
 
     showMouseAfterDelay();
 
     const handleMouseMove = (e: MouseEvent) => {
-      const x = e.clientX - 90; 
-      const y = e.clientY - 90; 
+      const x = e.clientX - 90;
+      const y = e.clientY - 90;
 
       xTo.current?.(x);
       yTo.current?.(y);

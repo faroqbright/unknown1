@@ -10,14 +10,14 @@ import { useSnapshot } from "valtio";
 import { store } from "@/store";
 // import Preloader from "../Preloader/Preloader";
 import { useRouter } from "next/router";
-import { memo } from "react"
+import { memo } from "react";
 // import Link from 'next/link';
 
 const Work = () => {
   const container = useRef<HTMLElement>(null);
   const heading = useRef<HTMLDivElement>(null);
   const [counter, setCounter] = useState<number>(1);
-  // const [loading, setLoading] = useState(false); 
+  // const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -53,35 +53,36 @@ const Work = () => {
             ease: "power3.out",
             delay: index * 0.6,
           }
-        ).to(word, {
-          rotationY: 89,
-          rotationZ: 8,
-          opacity: 1,
-          duration: 2.0,
-          ease: "power3.out",
-          delay: 0.5,
-        })
-
-        .fromTo(
-          letters,
-          {
-            opacity: 0,
-            rotationY: -90,
-            transformPerspective: 1000,
-            transformOrigin: "50% 50%",
-          },
-          {
+        )
+          .to(word, {
+            rotationY: 89,
+            rotationZ: 8,
             opacity: 1,
-            rotationY: 0,
-            stagger: {
-              each: 0.1,
-              from: "end",
-            },
-            duration: 1,
+            duration: 2.0,
             ease: "power3.out",
-          },
-          0
-        );
+            delay: 0.5,
+          })
+
+          .fromTo(
+            letters,
+            {
+              opacity: 0,
+              rotationY: -90,
+              transformPerspective: 1000,
+              transformOrigin: "50% 50%",
+            },
+            {
+              opacity: 1,
+              rotationY: 0,
+              stagger: {
+                each: 0.1,
+                from: "end",
+              },
+              duration: 1,
+              ease: "power3.out",
+            },
+            0
+          );
       });
     }
   }, []);
@@ -89,12 +90,12 @@ const Work = () => {
   useGSAP(
     () => {
       let mm = gsap.matchMedia();
-  
+
       mm.add(
         { isDesktop: `(min-width: 800px)`, isMobile: `(max-width: 799px)` },
         (context) => {
           let { isDesktop } = context.conditions as { isDesktop: boolean };
-  
+
           gsap
             .timeline({
               scrollTrigger: {
@@ -118,7 +119,7 @@ const Work = () => {
               fill: "black",
               ease: "power1.inOut", // Adjust easing
             });
-  
+
           let tl = gsap.timeline({
             scrollTrigger: {
               trigger: `.slider`,
@@ -130,10 +131,9 @@ const Work = () => {
             },
             defaults: { ease: "power2.out" }, // Use slower easing
           });
-  
+
           data.forEach((_, i) => {
-            tl
-              .call(() => setCounter(i + 1))
+            tl.call(() => setCounter(i + 1))
               .to(`.slide-${i - 1}`, { yPercent: -100 })
               .from(`.slide-${i}`, { yPercent: i === 0 ? 0 : 100 }, "<")
               .from(`.work-path-${i + 1}`, {
@@ -141,22 +141,34 @@ const Work = () => {
                 duration: 2.5, // Increased duration for slower scaling effect
                 ease: "power2.out", // Slower easing
               })
-              .from(`.image-${i}`, {
-                left: isDesktop ? "130%" : "80%",
-                top: isDesktop ? "60%" : "100%",
-                rotate: -40,
-                duration: 5.5, // Increased duration for slower movement
-              }, "<") // Image starts moving immediately
-              .from(`.heading-${i}`, {
-                scale: 0.8,
-                duration: 1.5, // Slightly slower
-                ease: "power2.out", // Adjust easing
-              }, "-=6") // Heading animation starts with image animation
-              .to(`.heading-${i}`, {
-                scale: 1.1,
-                duration: 5.5, // Slow down to match image movement
-                ease: "power2.out",
-              }, "<") // Heading scaling happens simultaneously
+              .from(
+                `.image-${i}`,
+                {
+                  left: isDesktop ? "130%" : "80%",
+                  top: isDesktop ? "60%" : "100%",
+                  rotate: -40,
+                  duration: 5.5, // Increased duration for slower movement
+                },
+                "<"
+              ) // Image starts moving immediately
+              .from(
+                `.heading-${i}`,
+                {
+                  scale: 0.8,
+                  duration: 1.5, // Slightly slower
+                  ease: "power2.out", // Adjust easing
+                },
+                "-=6"
+              ) // Heading animation starts with image animation
+              .to(
+                `.heading-${i}`,
+                {
+                  scale: 1.1,
+                  duration: 5.5, // Slow down to match image movement
+                  ease: "power2.out",
+                },
+                "<"
+              ) // Heading scaling happens simultaneously
               .call(() => setCounter(i + 1))
               .to(`.work-path-${i + 1}`, {
                 scale: 0,
@@ -164,13 +176,11 @@ const Work = () => {
                 ease: "power2.out",
               });
           });
-          
         }
       );
     },
     { scope: container }
   );
-  
 
   const { workHeadingPointerEnter, workHeadingPointerLeave } =
     useSnapshot(store);
@@ -178,9 +188,9 @@ const Work = () => {
   const handleCardClick = (id: number) => {
     // // setLoading(true);
     // setTimeout(() => {
-      // setLoading(false);
-      router.push(`/work/${id}`); 
-    // }, 1000); 
+    // setLoading(false);
+    router.push(`/work/${id}`);
+    // }, 1000);
   };
 
   return (
@@ -217,7 +227,11 @@ const Work = () => {
 
         {data.map(({ name }, i) => {
           return (
-            <div key={i} className={`slide-${i} ${s.slide}`} onClick={() => handleCardClick(i)}>
+            <div
+              key={i}
+              className={`slide-${i} ${s.slide}`}
+              onClick={() => handleCardClick(i)}
+            >
               <Elements id={i} />
               <Image
                 className={`image-${i} ${s.image}`}
@@ -225,7 +239,7 @@ const Work = () => {
                 alt="image"
                 height={2000}
                 width={2000}
-                loading="lazy" 
+                loading="lazy"
               />
 
               <div

@@ -28,6 +28,7 @@
     "react-use-window-scroll": "^1.1.7",
     "sharp": "^0.33.5",
     "split-type": "^0.3.4",
+    "star-of-life": "file:",
     "three": "^0.168.0",
     "valtio": "^1.13.2"
   },
