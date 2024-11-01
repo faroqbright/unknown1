@@ -219,7 +219,8 @@ const Showreel = () => {
           width: "100%",
           height: 0,
           borderRadius: "20px",
-          marginBottom: "-100px",
+          marginBottom: "-50px",
+          marginTop: "150px",
         }}
       >
         <iframe

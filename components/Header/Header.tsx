@@ -543,7 +543,7 @@ const Header = ({
         ref={header}
         id="unknown-header"
         className={s.main}
-        style={{ position: "sticky" }}
+        // style={{ position: "sticky" }}
       >
         <div
           ref={logo}
