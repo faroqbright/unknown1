@@ -266,7 +266,10 @@ const Work = () => {
               width={2000}
               loading="lazy"
             />
-            <div>
+            <div
+              onPointerEnter={workHeadingPointerEnter}
+              onPointerLeave={workHeadingPointerLeave}
+              >
               <h2 className={`heading-${i}`}>{name}</h2>
               <h2 className={`heading-${i}`} data-stroke>
                 {name}
