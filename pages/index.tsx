@@ -6,7 +6,7 @@ import Cookie from "@/components/Cookie/Cookie";
 import Footer from "@/components/Footer/Footer";
 import Services from "@/components/Services/Services";
 import Showreel from "@/components/Showreel/Showreel";
-import Work from "@/components/Work/Work";
+import Work from "@/components/Work/WorkCopy";
 import Hero from "@/components/Hero/Hero";
 import Head from "next/head";
 

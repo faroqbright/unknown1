@@ -1,3 +1,5 @@
+// components/Work/data.ts
+
 type Data = {
   id: number;
   name: string;
@@ -38,17 +40,6 @@ export const data: Data[] = [
     desc: ["Direction artistique", "Identité de marque", "print / digital"],
     color: "#fff4ce",
   },
-  // {
-  //   id: 3,
-  //   name: "Kim Layani",
-  //   desc: [
-  //     "Contenu Editorial",
-  //     "Direction de production",
-  //     "Identité de marque",
-  //     "print / digital",
-  //   ],
-  //   color: "#daf2e0",
-  // },
   {
     id: 3,
     name: "Everphone",
