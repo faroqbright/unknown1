@@ -10,6 +10,7 @@ import { useLottie } from "lottie-react";
 import PL from "./PL_logo.json";
 import { memo } from "react";
 import CustomLinkC from "../Footer/CustomLinkC";
+import { useRouter } from "next/router";
 const Header = ({
   menuBtnEnter,
   menuBtnLeave,
@@ -521,6 +522,9 @@ const Header = ({
     };
   }, []);
 
+  const router = useRouter();
+  const isMainPage = router.pathname === "/";
+
   return (
     <div ref={container}>
       <div className={`large ${s.large}`}>
@@ -582,7 +586,7 @@ const Header = ({
         </div>
       </header>
 
-      {!isNavOpen && (
+      {!isNavOpen && isMainPage && (
         <div className={s.dotNavigation}>
           <div className={s.dotColumn}>
             {headings.map((heading, index) => {

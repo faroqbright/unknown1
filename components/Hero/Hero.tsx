@@ -81,6 +81,8 @@ const Hero: React.FC = () => {
             }}
             src="/datam1.svg"
             alt="Mobile Animation"
+            width={500} // Set your image width
+            height={500} // Set your image height
           />
         )}
       </div>
