@@ -443,7 +443,7 @@ const Header = ({
     stop();
   }, [stop]);
 
-  const [isWhite, setIsWhite] = useState(true);
+  const [isWhite, setIsWhite] = useState(false);
   const headings = [
     "Work",
     "Archive",
@@ -591,9 +591,7 @@ const Header = ({
                 <div key={heading} className={s.dotWrapper}>
                   <div className={s.nameContainer}>
                     <div
-                      className={`${s.name} ${
-                        isWhite ? s.whiteText : s.blackText
-                      } ${isActive ? `${s.activeName} ${s.whiteText}` : ""}`}
+                      className={`${s.name} ${isActive ? `${s.activeName}` : ""}`}
                       onClick={() => handleScrollTo(index)}
                       style={{ color: isWhite ? "white" : "black" }}
                     >
