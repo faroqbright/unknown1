@@ -51,6 +51,12 @@ export default function Bauhas() {
             Bauhaus, the art school that revolutionized the design world in the
             1920s
           </p>
+          <p className="text-2xl leading-snug max-sm:px-[20px] px-2 lg:px-0">
+            and 30s, is celebrated for its commitment to modernism, simplicity,
+            and functionality. Today, this iconic style continues to inspire
+            designers and enthusiasts alike, and is now available in the form of
+            Bauhaus wallpaper.
+          </p>
         </div>
         <div className="col-span-1 relative aspect-square hidden lg:block">
           <Image
@@ -61,12 +67,6 @@ export default function Bauhas() {
           />
         </div>
       </div>
-      <p className="text-2xl lg:text-4xl max-sm:px-[20px] max-sm:pt-[30px] leading-snug px-2 lg:p-28">
-        and 30s, is celebrated for its commitment to modernism, simplicity, and
-        functionality. Today, this iconic style continues to inspire designers
-        and enthusiasts alike, and is now available in the form of Bauhaus
-        wallpaper.
-      </p>
 
       <div className="w-full h-full mt-28 max-sm:mt-20 px-4 max-sm:px-8">
         <div className="lg:w-[75%] mx-auto border-black border-[5px] rounded-xl lg:border-[10px] lg:rounded-[50px] aspect-video bg-gray-300"></div>

@@ -4,21 +4,28 @@ import React from "react";
 
 interface IphoneFrameProps extends HTMLAttributes<HTMLDivElement> {
   src: string;
+  className?: string;
 }
 
-const IphoneFrame: React.FC<IphoneFrameProps> = ({ ...props }) => {
+const IphoneFrame: React.FC<IphoneFrameProps> = ({
+  src,
+  className = "",
+  ...props
+}) => {
   return (
     <div
-      className={`h-[690px] max-sm:h-[600px] w-[341px] max-sm:w-[270px] border-[16px] border-black rounded-[40px] relative ${props.className}`}
+      className={`h-[690px] max-sm:h-[523px] w-[320px] max-sm:w-[245px] border-[15px] border-black rounded-[40px] relative ${className}`}
+      {...props}
     >
       <Image
-        src={props.src}
+        src={src}
         alt="website"
         layout="fill"
         objectFit="cover"
-        className="rounded-[22px]"
+        className="rounded-[22px] max-sm:top-[-1px]"
       />
     </div>
   );
 };
+
 export default IphoneFrame;

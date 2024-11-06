@@ -129,10 +129,13 @@ const Everphone = () => {
         <Banner BannerImageSrc="/work/everphone/everphoneBanner.png" />
 
         {/* Iphone Frame Section */}
-        <div className="flex justify-center max-sm:justify-center mt-28 max-sm:mt-[340px] place-items-end h-[1050px]">
+        <div className="flex justify-center max-sm:justify-center mt-28 max-sm:mt-[280px] place-items-end h-[1050px]">
           <div className="grid lg:grid-cols-2 lg:gap-32 max-sm:gap-20">
             <div>
-              <IphoneFrame src="/work/everphone/Mobile-everphone1.png" />
+              <IphoneFrame
+                src="/work/everphone/Mobile-everphone1.png"
+                className="custom-class"
+              />
             </div>
             <div className="relative lg:translate-y-[-60px]">
               <IphoneFrame
