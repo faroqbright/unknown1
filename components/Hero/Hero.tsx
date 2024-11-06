@@ -5,8 +5,9 @@ import useWindowSize from "@/hooks/useWindowSize";
 import dynamic from "next/dynamic";
 import { useState, useEffect, memo } from "react";
 import { useInView } from "react-intersection-observer";
+import Image from "next/image";
 
-const Lottie = dynamic(() => import('react-lottie'), { ssr: false });
+const Lottie = dynamic(() => import("react-lottie"), { ssr: false });
 
 type AnimationData = {
   default: object;
@@ -18,13 +19,15 @@ const Hero: React.FC = () => {
   const [showData2, setShowData2] = useState(false);
   const [animationData, setAnimationData] = useState<object | null>(null);
   const { ref, inView } = useInView({
-    triggerOnce: true, 
+    triggerOnce: true,
     threshold: 0.5,
   });
 
   const loadAnimationData = async (showEnd: boolean) => {
     try {
-      const data = showEnd ? await import('./lottie/end.json') : await import('./lottie/start.json');
+      const data = showEnd
+        ? await import("./lottie/end.json")
+        : await import("./lottie/start.json");
       setAnimationData(data.default);
     } catch (error) {
       console.error("Failed to load animation data:", error);
@@ -46,7 +49,12 @@ const Hero: React.FC = () => {
 
   return (
     <section id="hero" className={s.main} ref={ref}>
-      <div onClick={() => scrollTo({ top: window.innerHeight, behavior: "smooth" })} className={s.arrow}>
+      <div
+        onClick={() =>
+          scrollTo({ top: window.innerHeight, behavior: "smooth" })
+        }
+        className={s.arrow}
+      >
         <HeroArrowDown />
       </div>
       <div className={s.lottie}>
@@ -59,17 +67,23 @@ const Hero: React.FC = () => {
                 animationData: animationData,
               }}
               eventListeners={[
-                { eventName: "complete", callback: handleAnimationComplete }
+                { eventName: "complete", callback: handleAnimationComplete },
               ]}
             />
           )
         ) : (
-          <img style={{
-            width: '80%',       // Adjust as necessary for responsiveness
-            height: 'auto',     // Maintain aspect ratio
-            display: 'block',
-            margin: '0 auto'    // Center the image horizontally
-          }} src="/datam1.svg" alt="Mobile Animation" />
+          <Image
+            style={{
+              width: "80%", // Adjust as necessary for responsiveness
+              height: "auto", // Maintain aspect ratio
+              display: "block",
+              margin: "0 auto", // Center the image horizontally
+            }}
+            src="/datam1.svg"
+            alt="Mobile Animation"
+            width={500} // Set your image width
+            height={500} // Set your image height
+          />
         )}
       </div>
     </section>

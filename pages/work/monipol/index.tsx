@@ -156,14 +156,14 @@ const Monipol = () => {
       {/*Vertical Image Section  */}
       <div className="grid lg:grid-cols-2 gap-5 h-full place-items-start">
         <div className="w-full aspect-auto mt-28 relative flex h-auto max-sm:px-6">
-          <img
+          <Image
             src={"/work/monipol/Success-Stories.png"}
             alt=""
             className="object-cover w-full h-auto"
           />
         </div>
         <div className="w-full aspect-auto mt-28 relative hidden lg:flex h-auto">
-          <img
+          <Image
             src={"/work/monipol/Advantage.png"}
             alt=""
             className="object-cover w-full h-auto"

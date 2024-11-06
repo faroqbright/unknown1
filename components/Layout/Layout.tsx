@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Header from "../Header/Header";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -15,6 +16,10 @@ const Layout: React.FC<Props> = ({ children }) => {
   const mouseHover = useRef<GSAPTween>();
   const xTo = useRef<gsap.QuickToFunc>();
   const yTo = useRef<gsap.QuickToFunc>();
+
+  // State for mouse text
+  const [mouseText, setMouseText] = useState("");
+  const router = useRouter();
 
   const { contextSafe } = useGSAP(
     () => {
@@ -37,8 +42,10 @@ const Layout: React.FC<Props> = ({ children }) => {
 
       let tl = gsap
         .timeline({ paused: true })
+        .add(() => setMouseText("View")) // Set text before scaling up
         .to(".mouse", { scale: 0.6, duration: 0.3 })
-        .to(".mousepara", { opacity: 1, duration: 0.2 }, "<0.2");
+        .to(".mousepara", { opacity: 1, duration: 0.2 }, "<0.2")
+        .add(() => setMouseText(""), "+=0.3"); // Clear text after scaling down
 
       store.workHeadingPointerEnter = () => {
         tl.play();
@@ -51,15 +58,23 @@ const Layout: React.FC<Props> = ({ children }) => {
   );
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-    const hideMouseInitially = () => {
-      const mouseElement = document.querySelector(".mouse");
-      if (mouseElement) {
-        mouseElement.classList.add("hidden");
+    const updateMouseText = (url: string) => {
+      if (url === "/") {
+        // Keep the text empty initially
+      } else {
+        setMouseText(""); // Remove text on other pages
+        gsap.to(".mouse", { scale: 0.1, duration: 0.3 });
       }
     };
 
-    hideMouseInitially();
+    // Set mouse text initially based on the current route
+    updateMouseText(window.location.pathname);
+
+    const handleRouteChange = (url: string) => {
+      updateMouseText(url);
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
 
     const storedX = localStorage.getItem("mouseX");
     const storedY = localStorage.getItem("mouseY");
@@ -71,17 +86,6 @@ const Layout: React.FC<Props> = ({ children }) => {
       xTo.current?.(window.innerWidth / 2 - 90);
       yTo.current?.(window.innerHeight / 2 - 90);
     }
-
-    const showMouseAfterDelay = () => {
-      setTimeout(() => {
-        const mouseElement = document.querySelector(".mouse");
-        if (mouseElement) {
-          mouseElement.classList.remove("hidden");
-        }
-      }, 100);
-    };
-
-    showMouseAfterDelay();
 
     const handleMouseMove = (e: MouseEvent) => {
       const x = e.clientX - 90;
@@ -96,8 +100,11 @@ const Layout: React.FC<Props> = ({ children }) => {
 
     window.addEventListener("mousemove", handleMouseMove);
 
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [contextSafe]);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [contextSafe, router.events]);
 
   const moveMover = contextSafe((e: React.MouseEvent) => {
     xTo.current!(e.clientX - 90);
@@ -131,8 +138,10 @@ const Layout: React.FC<Props> = ({ children }) => {
 
   return (
     <main onMouseMove={moveMover} ref={container}>
-      <div className="mouse hidden">
-        <p className="mousepara">View</p>
+      <div className="mouse">
+        <p className="mousepara" style={{ opacity: mouseText ? 1 : 0 }}>
+          {mouseText}
+        </p>
       </div>
       <Preloader />
       <Header

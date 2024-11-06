@@ -10,6 +10,7 @@ import { useLottie } from "lottie-react";
 import PL from "./PL_logo.json";
 import { memo } from "react";
 import CustomLinkC from "../Footer/CustomLinkC";
+import { useRouter } from "next/router";
 const Header = ({
   menuBtnEnter,
   menuBtnLeave,
@@ -71,33 +72,32 @@ const Header = ({
     { heading: "Contact", color: "#D6C2E4" },
   ];
 
-  const handleScroll = () => {
-    const sections = components.map((comp) =>
-      document.getElementById(comp.heading.toLowerCase())
-    );
-    const scrollPosition = window.scrollY + window.innerHeight / 3;
-
-    sections.forEach((section, index) => {
-      if (section) {
-        const { offsetTop, clientHeight } = section;
-        if (
-          scrollPosition >= offsetTop &&
-          scrollPosition < offsetTop + clientHeight
-        ) {
-          setActiveMenus(index);
-          setActiveComponentName(components[index].heading);
-        }
-      }
-    });
-  };
-
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      const sections = components.map((comp) =>
+        document.getElementById(comp.heading.toLowerCase())
+      );
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
 
+      sections.forEach((section, index) => {
+        if (section) {
+          const { offsetTop, clientHeight } = section;
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + clientHeight
+          ) {
+            setActiveMenus(index);
+            setActiveComponentName(components[index].heading);
+          }
+        }
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [components, setActiveMenus, setActiveComponentName]);
 
   const handleScrollTo = (index: number) => {
     const element = document.querySelector(
@@ -161,9 +161,6 @@ const Header = ({
             } else if (visibleIndex > 1) {
               setActiveMenus(visibleIndex);
             }
-            console.log(
-              `Active section changed to: ${component[visibleIndex].heading}`
-            );
           }
         });
       },
@@ -447,7 +444,7 @@ const Header = ({
     stop();
   }, [stop]);
 
-  const [isWhite, setIsWhite] = useState(true);
+  const [isWhite, setIsWhite] = useState(false);
   const headings = [
     "Work",
     "Archive",
@@ -525,6 +522,9 @@ const Header = ({
     };
   }, []);
 
+  const router = useRouter();
+  const isMainPage = router.pathname === "/";
+
   return (
     <div ref={container}>
       <div className={`large ${s.large}`}>
@@ -539,12 +539,7 @@ const Header = ({
           );
         })}
       </div>
-      <header
-        ref={header}
-        id="unknown-header"
-        className={s.main}
-        style={{ position: "sticky" }}
-      >
+      <header ref={header} id="unknown-header" className={s.main}>
         <div
           ref={logo}
           onPointerEnter={() => play()}
@@ -591,7 +586,7 @@ const Header = ({
         </div>
       </header>
 
-      {!isNavOpen && (
+      {!isNavOpen && isMainPage && (
         <div className={s.dotNavigation}>
           <div className={s.dotColumn}>
             {headings.map((heading, index) => {
@@ -600,9 +595,7 @@ const Header = ({
                 <div key={heading} className={s.dotWrapper}>
                   <div className={s.nameContainer}>
                     <div
-                      className={`${s.name} ${
-                        isWhite ? s.whiteText : s.blackText
-                      } ${isActive ? `${s.activeName} ${s.whiteText}` : ""}`}
+                      className={`${s.name} ${isActive ? `${s.activeName}` : ""}`}
                       onClick={() => handleScrollTo(index)}
                       style={{ color: isWhite ? "white" : "black" }}
                     >
